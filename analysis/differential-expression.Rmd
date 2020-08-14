@@ -40,13 +40,13 @@ class(x)
 Calculate log2 counts per million (log2cpm).
 
 ```{r cpm}
-log2cpm <- ___(x, log = ___)
+log2cpm <- cpm(x, log = TRUE)
 ```
 
 Plot density of expression values for each sample.
 
 ```{r plotDensities}
-___(___, group = group, main = "Raw")
+plotDensities(log2cpm, group = group, main = "Raw")
 ```
 
 <!-- Ex 2: Filter -->
@@ -55,16 +55,16 @@ Only keep features which have at least 10 counts in at least 4 wildtype or 4
 mutant samples.
 
 ```{r keep}
-keep <- ___(x, group = group)
+keep <- filterByExpr(x, group = group)
 sum(keep)
-x <- x[___, ]
+x <- x[keep, ]
 ```
 
 Re-calculate log2cpm and re-plot densities.
 
 ```{r plotDensitiesFiltered}
-log2cpm <- ___(x, log = ___)
-___(___, group = group, main = "Filtered")
+log2cpm <- cpm(x, log = TRUE)
+plotDensities(log2cpm, group = group, main = "Filtered")
 ```
 
 <!-- Ex 3: Normalize -->
@@ -72,9 +72,9 @@ ___(___, group = group, main = "Filtered")
 Normalize the samples, re-calculate log2cpm, and re-plot densities.
 
 ```{r normalize}
-x <- ___(x)
-log2cpm <- ___(x, log = ___)
-___(___, group = group, main = "Normalized")
+x <- calcNormFactors(x)
+log2cpm <- cpm(x, log = TRUE)
+plotDensities(log2cpm, group = group, main = "Normalized")
 ```
 
 ## Process samples
