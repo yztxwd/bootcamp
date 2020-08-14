@@ -1,0 +1,21 @@
+name: bootcamp
+output_dir: ../docs
+navbar:
+  title: bootcamp
+  left:
+  - text: Home
+    href: index.html
+  - text: About
+    href: about.html
+  - text: License
+    href: license.html
+  right:
+  - icon: fa-github
+    text: Source code
+    href: https://github.com/yztxwd/bootcamp
+output:
+  workflowr::wflow_html:
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+    highlight: textmate
