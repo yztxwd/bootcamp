@@ -142,13 +142,13 @@ summary(decideTests(fit))
 View top 10 differentially expressed genes.
 
 ```{r}
-topTable(fit, coef = 1)
+topTable(fit, coef = 2)
 ```
 
 Create a barplot of the top DE feature:
 
 ```{r}
-barplot(log2cpm["YDR345C", ], las = 2, cex.names = 0.75)
+barplot(log2cpm["YML123C", ], las = 2, cex.names = 0.75)
 ```
 
 <!-- Ex 2: assessment -->
@@ -170,5 +170,5 @@ plotSA(fit)
 Create a volcano plot.
 
 ```{r volcano}
-volcanoplot(fit, coef = 1, highlight = 5, names = fit$genes$Geneid)
+volcanoplot(fit, coef = 2, highlight = 5, names = fit$genes$Geneid)
 ```
