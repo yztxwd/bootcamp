@@ -17,7 +17,8 @@ library(edgeR)
 Import counts.
 
 ```{r import}
-rawData <- read.table("~/scratch/bootcamp/data/counts.txt",
+#rawData <- read.table("~/scratch/bootcamp/data/counts.txt",
+rawData <- read.table("data/counts.txt",
                       header = TRUE,
                       stringsAsFactors = FALSE)
 dim(rawData)
@@ -84,7 +85,7 @@ plotDensities(log2cpm, group = group, main = "Normalized")
 Confirm that the mutant samples are null for SNF2.
 
 ```{r snf2}
-___(log2cpm["___", ], main = "SNF2")
+barplot(log2cpm["YOR290C", ], main = "SNF2", las=2)
 ```
 
 <!-- Ex 2: PCA -->
@@ -92,13 +93,13 @@ ___(log2cpm["___", ], main = "SNF2")
 Perform PCA.
 
 ```{r pca}
-___(___, gene.selection = "common")
+plotMDS(log2cpm , gene.selection = "common")
 ```
 
 Remove outlier sample.
 
 ```{r}
-x <- x[, colnames(x) != "___"]
+x <- x[, colnames(x) != "mutant.06"]
 dim(x)
 ```
 
@@ -107,8 +108,8 @@ dim(x)
 Re-calculate log2cpm and re-perform PCA.
 
 ```{r pca2}
-log2cpm <- ___(x, log = ___)
-___(___, gene.selection = "common")
+log2cpm <- cpm(x, log = TRUE)
+plotMDS(log2cpm, gene.selection = "common")
 ```
 
 ## Model
@@ -135,19 +136,19 @@ fit <- eBayes(fit)
 Count number of differentially expressed features.
 
 ```{r number-of-de-genes}
-summary(___(fit))
+summary(decideTests(fit))
 ```
 
 View top 10 differentially expressed genes.
 
 ```{r}
-___(fit, coef = ___)
+topTable(fit, coef = 1)
 ```
 
 Create a barplot of the top DE feature:
 
 ```{r}
-___(log2cpm["___", ], las = 2, cex.names = 0.75)
+barplot(log2cpm["YDR345C", ], las = 2, cex.names = 0.75)
 ```
 
 <!-- Ex 2: assessment -->
@@ -155,13 +156,13 @@ ___(log2cpm["___", ], las = 2, cex.names = 0.75)
 Visualize p-value distribution.
 
 ```{r p-values}
-___(fit$p.value[, 2], main = "p-value distribution")
+hist(fit$p.value[, 2], main = "p-value distribution")
 ```
 
 Visualize residual variation versus magnitude of expression.
 
 ```{r residuals}
-___(fit)
+plotSA(fit)
 ```
 
 <!-- Ex 3: volcano -->
@@ -169,5 +170,5 @@ ___(fit)
 Create a volcano plot.
 
 ```{r volcano}
-___(fit, coef = ___, highlight = 5, names = fit$genes$Geneid)
+volcanoplot(fit, coef = 1, highlight = 5, names = fit$genes$Geneid)
 ```
